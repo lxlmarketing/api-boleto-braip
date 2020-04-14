@@ -1,4 +1,6 @@
 const uuidv4 = require('uuid/v4');
+const pdfcrowd = require("pdfcrowd");
+const api = new pdfcrowd.HtmlToPdfClient("demo","ce544b6ea52a5621fb9d55f8b542d14d");
 
 module.exports = app => {
   const customerWalletsDB = app.data.customerWallets;
@@ -7,6 +9,24 @@ module.exports = app => {
   const {
     customerWallets: customerWalletsMock,
   } = customerWalletsDB;
+
+  
+
+
+
+  controller.convertTest = (req, res) => {
+    var callbacks = pdfcrowd.sendImageInHttpResponse(res, "application/pdf", "result.pdf", "attachment");
+
+    // configure the callback to send an error in the HTTP response
+    callbacks.error = function(errMessage, statusCode) {
+        res.set('Content-Type', 'text/plain');
+        res.status(statusCode || 400);
+        res.send(errMessage);
+    }
+
+    // run the conversion
+    api.convertUrl("https://ev.braip.com/checkout/boleto/venggzd1", callbacks);
+  };
 
   controller.listCustomerWallets = (req, res) => res.status(200).json(customerWalletsDB);
 
