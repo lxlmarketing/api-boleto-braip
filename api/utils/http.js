@@ -12,7 +12,7 @@ module.exports  = {
                 if (res.status == 200) {
                     response.status(200).json(res.body);
                 } else {
-                    errorResponse(res.error, response);
+                    errorResponse(res, response);
                 } 
             });
     },
@@ -23,16 +23,14 @@ module.exports  = {
         .headers(buildHeaders())
         .send(message)
         .end(function (res) {
-            if (res.status == 200 || es.status == 201) {
+            if (res.status == 200 || res.status == 201) {
                 response.status(201).json(res.body);
             } else {
-                errorResponse(res.error, response);
+                errorResponse(res, response);
             } 
         });
     }
 };
-
-
 
 var buildHeaders = function(){
     return {
@@ -41,7 +39,9 @@ var buildHeaders = function(){
     }
 }
 
-var errorResponse = function(error, response){
-    if (error) console.log(error);
-    response.status(400).json(res.body);
+var errorResponse = function(res, responseHttp){
+    if (res.error) {
+        console.log(res.error);
+    }
+    responseHttp.status(400).json(res.body);
 }
