@@ -12,6 +12,13 @@ module.exports = () => {
   // MIDDLEWARES
   app.use(bodyParser.json());
 
+  app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    next();
+});
+
   // ENDPOINTS
   consign({cwd: 'api'})
     .then('controllers')
