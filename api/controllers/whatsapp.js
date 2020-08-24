@@ -13,7 +13,7 @@ module.exports = app => {
         var body = {
             'caption': req.body.caption,
             'number': req.body.number,
-            'url': `${aplicationExternalUrl}/api/v1/bankslip/download/${req.body.salesCode}`
+            'url': req.body.url, /*`${aplicationExternalUrl}/api/v1/bankslip/download/${req.body.salesCode}`*/
         }
         httpUtils.doPost(res, "api/v1/send_message_file_from_url", JSON.stringify(body));
     };
