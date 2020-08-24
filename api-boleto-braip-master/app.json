@@ -1,0 +1,7 @@
+{
+    "name": "default-nodejs-api",
+    "description": "Default NodeJS API with no database",
+    "repository": "https://github.com/rafaelmagossi/nodejs-default-api-no-database",
+    "keywords": ["api"],
+    "stack": "heroku-18"
+}
